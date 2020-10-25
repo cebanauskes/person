@@ -10,7 +10,7 @@ from scipy.spatial import distance
 from .models import Person
 from .serializers import (
     PersonIdSerializer,
-    PersonCreateSerializer,
+    PersonCreateUpdateSerializer,
     GetPersonSerializer
 )
 from .utils import get_vector
@@ -27,7 +27,7 @@ class PersonViewSet(viewsets.ViewSet):
 
     def create(self, request):
         """Создает экземпляр Person с first_name и last_name."""
-        serializer = PersonCreateSerializer(data=request.data)
+        serializer = PersonCreateUpdateSerializer(data=request.data)
 
         if serializer.is_valid():
             person = Person.objects.create(**serializer.validated_data)
@@ -49,7 +49,7 @@ class PersonViewSet(viewsets.ViewSet):
         """Добавляет вектор к экземпляру Person."""
         size = (300, 300)                       # размер, до которого нужно сжать изображение
         vector = get_vector(request, size)      # получает вектор из запроса
-        serializer = PersonCreateSerializer(data=request.data)
+        serializer = PersonCreateUpdateSerializer(data=request.data)
 
         if serializer.is_valid():
             Person.objects.filter(pk=pk).update(

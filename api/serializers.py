@@ -12,7 +12,7 @@ class PersonIdSerializer(serializers.ModelSerializer):
         )
 
 
-class PersonCreateSerializer(serializers.ModelSerializer):
+class PersonCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
